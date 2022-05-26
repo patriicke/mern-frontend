@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Signup from "../SIGNUP/signup";
 import { Link } from "react-router-dom";
 export default function Login() {
   const [newUser, setUser] = useState({});
@@ -13,6 +12,7 @@ export default function Login() {
   function handleSubmit(event) {
     event.preventDefault();
   }
+
   return (
     <div className="bg-white w-[100%] h-[100vh] flex justify-center items-center">
       <form
@@ -42,7 +42,7 @@ export default function Login() {
         </div>
         <div className="flex h-[10%] w-[100%] justify-evenly ">
           <Link
-            to="/signup"
+            to='/signup'
             className="bg-blue-400 h-[100%] w-[40%] rounded-md shadow-lg text-[1.2em] font-bold flex items-center justify-center"
           >
             SIGNUP
