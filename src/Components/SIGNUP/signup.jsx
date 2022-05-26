@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Login from "../LOGIN/Login";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "./../../axios/axios";
 export default function Signup() {
@@ -20,8 +19,6 @@ export default function Signup() {
       console.log(error.response.data);
     }
   }
-  console.log(newUser);
-  useEffect(() => {}, [newUser]);
   return (
     <div className="bg-white w-[100%] h-[100vh] flex justify-center items-center">
       <form
