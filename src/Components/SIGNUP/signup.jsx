@@ -22,58 +22,58 @@ export default function Signup() {
   return (
     <div className="bg-white w-[100%] h-[100vh] flex justify-center items-center">
       <form
-        className="bg-white w-[30em] h-[40em] shadow-xl rounded-md flex py-5 px-2 flex-col gap-4"
+        className="bg-white w-[30em] h-[45em] shadow-xl rounded-md flex py-3 px-2 flex-col gap-4"
         onSubmit={handleSubmit}
       >
-        <div className="w-[100%] h-[12%] text-[2em] font-bold justify-center flex">
+        <div className="w-[100%] h-[10%] text-[2em] font-bold justify-center flex">
           Signup
         </div>
-        <div className="w-[100%] h-[12%] px-3">
+        <div className="w-[100%] h-[10%] px-3">
           <input
             type="text"
             name="fname"
             placeholder="First Name"
-            className="w-[100%] h-[100%] text-[1.3em]  focus:border-b-2 focus:border-blue-300 outline-none"
+            className="w-[100%] h-[70%] text-[1.3em]  focus:border-b-2 focus:border-blue-300 outline-none"
             onChange={handleChange}
             required
           />
         </div>
-        <div className="w-[100%] h-[12%] px-3">
+        <div className="w-[100%] h-[10%] px-3">
           <input
             type="text"
             name="lname"
             placeholder="Last Name"
-            className="w-[100%] h-[100%] text-[1.3em]  focus:border-b-2 focus:border-blue-300 outline-none"
+            className="w-[100%] h-[70%] text-[1.3em]  focus:border-b-2 focus:border-blue-300 outline-none"
             onChange={handleChange}
             required
           />
         </div>
-        <div className="w-[100%] h-[12%] px-3">
+        <div className="w-[100%] h-[10%] px-3">
           <input
             type="email"
             name="email"
             placeholder="Email"
-            className="w-[100%] h-[100%] text-[1.3em]  focus:border-b-2 focus:border-blue-300 outline-none"
+            className="w-[100%] h-[70%] text-[1.3em]  focus:border-b-2 focus:border-blue-300 outline-none"
             onChange={handleChange}
             required
           />
         </div>
-        <div className="w-[100%] h-[12%] px-3">
+        <div className="w-[100%] h-[10%] px-3">
           <input
             type="text"
             name="username"
             placeholder="Username"
-            className="w-[100%] h-[100%] text-[1.3em]  focus:border-b-2 focus:border-blue-300 outline-none"
+            className="w-[100%] h-[70%] text-[1.3em]  focus:border-b-2 focus:border-blue-300 outline-none"
             onChange={handleChange}
             required
           />
         </div>
-        <div className="w-[100%] h-[12%] px-3">
+        <div className="w-[100%] h-[10%] px-3">
           <input
             type="password"
             name="password"
             placeholder="Enter Password"
-            className="w-[100%] h-[100%] text-[1.3em]  focus:border-b-2 focus:border-blue-300 outline-none"
+            className="w-[100%] h-[70%] text-[1.3em]  focus:border-b-2 focus:border-blue-300 outline-none"
             onChange={handleChange}
             required
           />

@@ -1,20 +1,34 @@
 import React, { useEffect, useState } from "react";
 import Logo from "/logo_only.jpg";
 import axios from "../../axios/axios";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 export default function Home() {
-  const { id } = useParams();
-  let [username, setUsername] = useState("");
+  const navigate = useNavigate();
+  const { username } = useParams();
+  let [user, setUser] = useState("");
   async function handleClient() {
-    const user = await axios.get(`/home/${id}`);
-    console.log(user.data);
+    const user = await axios.get(`/home/${username}`);
     let userName = `${user.data.fname} ${user.data.lname}`;
-    setUsername((name) => userName);
+    if (user.data === "signin") {
+      navigate("/");
+    }
+    setUser((name) => userName);
   }
   handleClient();
+  const [drop, setDrop] = useState(false);
+  const handleDrop = () => {
+    setDrop(true);
+  };
+  const handleHide = () => {
+    setDrop(false);
+  };
+  useEffect(() => {}, [drop]);
   return (
-    <div className="bg-white h-[100vh] lg:w-[80%]  flex flex-col gap-2 items-center m-auto sm:w-[100%]">
+    <div
+      className="bg-white h-[100vh] lg:w-[80%]  flex flex-col gap-2 items-center m-auto sm:w-[100%]"
+      onClick={handleHide}
+    >
       <div className="bg-white-100 h-[10%] w-[100%] flex justify-between shadow-lg gap-2 ">
         <div className="h-[100%] w-[20%]  flex items-center ">
           <img src={Logo} className="w-[30%] h-[90%] bg-white" />
@@ -50,33 +64,39 @@ export default function Home() {
                 <span className="material-symbols-outlined text-[2.2em] ">
                   account_circle_full
                 </span>
-                <span className="material-symbols-outlined  text-[2em] hover:cursor-pointer">
+                <span
+                  className="material-symbols-outlined  text-[2em] hover:cursor-pointer"
+                  onMouseEnter={handleDrop}
+                  onClick={handleDrop}
+                >
                   arrow_drop_down
                 </span>
               </div>
-              <div
-                className={`absolute h-[14em] w-[11.5em] left-[-3em] top-[2.5em] flex flex-col gap-1 bg-[#e7e6f7] shadow-lg rounded-sm divide-y-2 divide-white`}
-              >
-                <div className="p-2 flex items-center hover:cursor-pointer hover:bg-slate-200">
-                  {username}
+              {drop && (
+                <div
+                  className={`absolute h-[14em] w-[11.5em] left-[-3em] top-[2.5em] flex flex-col gap-1 bg-[#e7e6f7] shadow-lg rounded-sm divide-y-2 divide-white`}
+                >
+                  <div className="p-2 flex items-center hover:cursor-pointer hover:bg-slate-200">
+                    {user}
+                  </div>
+                  <div className="p-2 flex items-center hover:cursor-pointer hover:bg-slate-200 gap-2">
+                    <span className="material-symbols-outlined">settings</span>
+                    Settings
+                  </div>
+                  <div className="p-2 flex items-center hover:cursor-pointer hover:bg-slate-200 gap-2">
+                    <span className="material-symbols-outlined">touch_app</span>
+                    Command
+                  </div>
+                  <div className="p-2 flex items-center hover:cursor-pointer hover:bg-slate-200 gap-2">
+                    <span className="material-symbols-outlined">pending</span>
+                    Pending
+                  </div>
+                  <div className="p-2 flex items-center hover:cursor-pointer hover:bg-slate-200 gap-2">
+                    <span className="material-symbols-outlined">logout</span>
+                    Log Out
+                  </div>
                 </div>
-                <div className="p-2 flex items-center hover:cursor-pointer hover:bg-slate-200 gap-2">
-                  <span className="material-symbols-outlined">settings</span>
-                  Settings
-                </div>
-                <div className="p-2 flex items-center hover:cursor-pointer hover:bg-slate-200 gap-2">
-                  <span className="material-symbols-outlined">touch_app</span>
-                  Command
-                </div>
-                <div className="p-2 flex items-center hover:cursor-pointer hover:bg-slate-200 gap-2">
-                  <span className="material-symbols-outlined">pending</span>
-                  Pending
-                </div>
-                <div className="p-2 flex items-center hover:cursor-pointer hover:bg-slate-200 gap-2">
-                  <span className="material-symbols-outlined">logout</span>
-                  Log Out
-                </div>
-              </div>
+              )}
             </div>
           </div>
         </div>
