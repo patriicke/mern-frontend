@@ -15,7 +15,6 @@ export default function Login() {
     event.preventDefault();
     try {
       const user = await axios.post("/login", newUser);
-      console.log(user.data);
       if (user.data.email === newUser.email) {
         navigate(`/home/${user.data.username}`);
       } else if (user.data === "Not Found") {

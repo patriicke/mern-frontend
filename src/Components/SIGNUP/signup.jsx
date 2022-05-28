@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "./../../axios/axios";
 export default function Signup() {
   const navigate = useNavigate();
+  const [serverMsg, setServerMsg] = useState("");
   const [newUser, setUser] = useState({});
   function handleChange(event) {
     const name = event.target.name;
@@ -13,11 +14,28 @@ export default function Signup() {
     event.preventDefault();
     try {
       const user = await axios.post("/create", newUser);
-      user.data === "created" && navigate("/");
+      if (user.data === "created") {
+        navigate("/");
+      } else if (user.data === "exists") {
+        setServerMsg(
+          (msg) => "User email already exists.   Try using another email!"
+        );
+      } else {
+        setServerMsg(
+          (msg) => "Username already exists. Try using another username!"
+        );
+      }
       console.log(user.data);
     } catch (error) {
       console.log(error.response.data);
     }
+  }
+  function ServerMessage() {
+    return (
+      <div className="w-[100%] h-[5%] px-3">
+        <p className="text-[red] text-[1.2em]">{serverMsg}</p>
+      </div>
+    );
   }
   return (
     <div className="bg-white w-[100%] h-[100vh] flex justify-center items-center">
@@ -78,6 +96,7 @@ export default function Signup() {
             required
           />
         </div>
+        {serverMsg !== "" ? <ServerMessage /> : null}
         <div className="flex h-[10%] w-[100%] justify-evenly ">
           <Link
             to="/"
