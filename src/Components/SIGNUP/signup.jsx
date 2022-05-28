@@ -113,13 +113,13 @@ export default function Signup() {
         <div className="flex h-[10%] w-[100%] justify-evenly ">
           <Link
             to="/"
-            className="bg-blue-400 h-[100%] w-[40%] rounded-md shadow-lg text-[1.2em] font-bold flex items-center justify-center"
+            className="bg-blue-400 h-[80%] w-[40%] rounded-md shadow-lg text-[1.2em] font-bold flex items-center justify-center"
           >
             LOGIN
           </Link>
           <button
             type="submit"
-            className="bg-green-500 h-[100%] w-[40%] rounded-md shadow-lg text-[1.4em] font-bold"
+            className="bg-green-500 h-[80%] w-[40%] rounded-md shadow-lg text-[1.4em] font-bold"
           >
             SIGNUP
           </button>
