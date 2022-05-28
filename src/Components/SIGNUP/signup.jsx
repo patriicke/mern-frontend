@@ -60,6 +60,16 @@ export default function Signup() {
         </div>
         <div className="w-[100%] h-[12%] px-3">
           <input
+            type="text"
+            name="username"
+            placeholder="Username"
+            className="w-[100%] h-[100%] text-[1.3em]  focus:border-b-2 focus:border-blue-300 outline-none"
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="w-[100%] h-[12%] px-3">
+          <input
             type="password"
             name="password"
             placeholder="Enter Password"

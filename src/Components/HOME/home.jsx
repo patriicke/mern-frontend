@@ -4,10 +4,10 @@ import axios from "../../axios/axios";
 import { useParams } from "react-router-dom";
 
 export default function Home() {
-  const { _id } = useParams();
+  const { id } = useParams();
   let [username, setUsername] = useState("");
   async function handleClient() {
-    const user = await axios.get(`/home/${_id}`);
+    const user = await axios.get(`/home/${id}`);
     console.log(user.data);
     let userName = `${user.data.fname} ${user.data.lname}`;
     setUsername((name) => userName);
