@@ -3,23 +3,39 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "./../../axios/axios";
 export default function Login() {
   const [newUser, setUser] = useState({});
+  const [serverMsg, setServerMsg] = useState("");
   const navigate = useNavigate();
   function handleChange(event) {
     const name = event.target.name;
     const value = event.target.value;
     setUser((values) => ({ ...values, [name]: value }));
   }
+
   async function handleSubmit(event) {
     event.preventDefault();
     try {
       const user = await axios.post("/login", newUser);
-      user.data === "loggedin" && navigate("/home");
       console.log(user.data);
+      if (user.data.email === newUser.email) {
+        navigate(`/home/${user.data._id}`);
+      } else if (user.data === "Not Found") {
+        setServerMsg((msg) => "User is not found. Please Signup");
+      } else {
+        setServerMsg(
+          (msg) => "User password or email is not correct. Please Try again!"
+        );
+      }
     } catch (error) {
       console.log(error.response.data);
     }
   }
-
+  function ServerMessage() {
+    return (
+      <div className="w-[100%] h-[5%] px-3">
+        <p className="text-[red] text-[1.2em]">{serverMsg}</p>
+      </div>
+    );
+  }
   return (
     <div className="bg-white w-[100%] h-[100vh] flex justify-center items-center">
       <form
@@ -36,6 +52,7 @@ export default function Login() {
             placeholder="Email"
             className="w-[100%] h-[100%] text-[1.3em]  focus:border-b-2 focus:border-blue-300 outline-none"
             onChange={handleChange}
+            required
           />
         </div>
         <div className="w-[100%] h-[12%] px-3">
@@ -45,8 +62,10 @@ export default function Login() {
             placeholder="Enter Password"
             className="w-[100%] h-[100%] text-[1.3em]  focus:border-b-2 focus:border-blue-300 outline-none"
             onChange={handleChange}
+            required
           />
         </div>
+        {serverMsg !== "" ? <ServerMessage /> : null}
         <div className="flex h-[10%] w-[100%] justify-evenly ">
           <Link
             to="/signup"

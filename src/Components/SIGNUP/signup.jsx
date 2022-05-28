@@ -35,6 +35,7 @@ export default function Signup() {
             placeholder="First Name"
             className="w-[100%] h-[100%] text-[1.3em]  focus:border-b-2 focus:border-blue-300 outline-none"
             onChange={handleChange}
+            required
           />
         </div>
         <div className="w-[100%] h-[12%] px-3">
@@ -44,6 +45,7 @@ export default function Signup() {
             placeholder="Last Name"
             className="w-[100%] h-[100%] text-[1.3em]  focus:border-b-2 focus:border-blue-300 outline-none"
             onChange={handleChange}
+            required
           />
         </div>
         <div className="w-[100%] h-[12%] px-3">
@@ -53,6 +55,7 @@ export default function Signup() {
             placeholder="Email"
             className="w-[100%] h-[100%] text-[1.3em]  focus:border-b-2 focus:border-blue-300 outline-none"
             onChange={handleChange}
+            required
           />
         </div>
         <div className="w-[100%] h-[12%] px-3">
@@ -62,6 +65,7 @@ export default function Signup() {
             placeholder="Enter Password"
             className="w-[100%] h-[100%] text-[1.3em]  focus:border-b-2 focus:border-blue-300 outline-none"
             onChange={handleChange}
+            required
           />
         </div>
         <div className="flex h-[10%] w-[100%] justify-evenly ">
