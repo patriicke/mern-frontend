@@ -14,18 +14,21 @@ export default function Signup() {
     event.preventDefault();
     try {
       const user = await axios.post("/create", newUser);
-      if (user.data === "created") {
-        navigate("/");
-      } else if (user.data === "exists") {
-        setServerMsg(
-          (msg) => "User email already exists.Try using another email!"
-        );
+      if (newUser.password === newUser.cpassword) {
+        if (user.data === "created") {
+          navigate("/");
+        } else if (user.data === "exists") {
+          setServerMsg(
+            (msg) => "User email already exists.Try using another email!"
+          );
+        } else {
+          setServerMsg(
+            (msg) => `Username already exists. Try using another username!`
+          );
+        }
       } else {
-        setServerMsg(
-          (msg) => `Username already exists. Try using another username!`
-        );
+        setServerMsg((msg) => `Passwords don't match`);
       }
-      console.log(user.data);
     } catch (error) {
       console.log(error.response.data);
     }
@@ -91,6 +94,16 @@ export default function Signup() {
             type="password"
             name="password"
             placeholder="Enter Password"
+            className="w-[100%] h-[70%] text-[1.3em]  focus:border-b-2 focus:border-blue-300 outline-none"
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="w-[100%] h-[10%] px-3">
+          <input
+            type="password"
+            name="cpassword"
+            placeholder="Confirm Password"
             className="w-[100%] h-[70%] text-[1.3em]  focus:border-b-2 focus:border-blue-300 outline-none"
             onChange={handleChange}
             required
