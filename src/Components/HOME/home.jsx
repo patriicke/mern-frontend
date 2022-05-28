@@ -25,10 +25,7 @@ export default function Home() {
   };
   useEffect(() => {}, [drop]);
   return (
-    <div
-      className="bg-white h-[100vh] lg:w-[80%]  flex flex-col gap-2 items-center m-auto sm:w-[100%]"
-      onClick={handleHide}
-    >
+    <div className="bg-white h-[100vh] lg:w-[80%]  flex flex-col gap-2 items-center m-auto sm:w-[100%]">
       <div className="bg-white-100 h-[10%] w-[100%] flex justify-between shadow-lg gap-2 ">
         <div className="h-[100%] w-[20%]  flex items-center ">
           <img src={Logo} className="w-[30%] h-[90%] bg-white" />
@@ -52,21 +49,20 @@ export default function Home() {
               </button>
             </form>
           </div>
-          <div className="w-[20%] flex justify-evenly ">
+          <div className="w-[20%] flex justify-evenly " onClick={handleHide}>
             <span className="material-symbols-outlined text-[1.8em]">
               notifications
             </span>
             <span className="material-symbols-outlined text-[1.8em]">chat</span>
           </div>
           <div className="w-[10%] flex flex-col px-2">
-            <div className="relative">
+            <div className="relative" onClick={handleDrop}>
               <div className="flex ">
                 <span className="material-symbols-outlined text-[2.2em] ">
                   account_circle_full
                 </span>
                 <span
                   className="material-symbols-outlined  text-[2em] hover:cursor-pointer"
-                  onMouseEnter={handleDrop}
                   onClick={handleDrop}
                 >
                   arrow_drop_down
@@ -101,10 +97,15 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="bg-white h-[70%] w-[100%]  shadow-lg">
+      <div
+        className="bg-white h-[70%] w-[100%]  shadow-lg"
+        onClick={handleHide}
+      >
         <h1 className="">Body</h1>
       </div>
-      <div className="h-[17%] w-[100%] shadow-lg">Footer</div>
+      <div className="h-[17%] w-[100%] shadow-lg" onClick={handleHide}>
+        Footer
+      </div>
     </div>
   );
 }
