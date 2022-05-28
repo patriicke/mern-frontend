@@ -18,11 +18,11 @@ export default function Signup() {
         navigate("/");
       } else if (user.data === "exists") {
         setServerMsg(
-          (msg) => "User email already exists.   Try using another email!"
+          (msg) => "User email already exists.Try using another email!"
         );
       } else {
         setServerMsg(
-          (msg) => "Username already exists. Try using another username!"
+          (msg) => `Username already exists. Try using another username!`
         );
       }
       console.log(user.data);
