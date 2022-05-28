@@ -5,10 +5,10 @@ import { useParams, useNavigate } from "react-router-dom";
 
 export default function Home() {
   const navigate = useNavigate();
-  const { username } = useParams();
+  const { id } = useParams();
   let [user, setUser] = useState("");
   async function handleClient() {
-    const user = await axios.get(`/home/${username}`);
+    const user = await axios.get(`/home/${id}`);
     let userName = `${user.data.fname} ${user.data.lname}`;
     if (user.data === "signin") {
       navigate("/");

@@ -16,7 +16,7 @@ export default function Login() {
     try {
       const user = await axios.post("/login", newUser);
       if (user.data.email === newUser.email) {
-        navigate(`/home/${user.data.username}`);
+        navigate(`/home/${user.data.id}`);
       } else if (user.data === "Not Found") {
         setServerMsg((msg) => "User is not found. Please Signup");
       } else {
