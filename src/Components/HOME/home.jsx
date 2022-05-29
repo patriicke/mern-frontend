@@ -58,9 +58,16 @@ export default function Home() {
               </button>
             </div>
             {searchBar && (
-              <div
-                className="h-[25em] w-[16.7em] bg-slate-200 shadow-xl absolute top-[2.5em]"
-              ></div>
+              <div className="h-[25em] w-[16.7em] bg-slate-200 shadow-xl absolute top-[2.5em]">
+                <div className="font-bold flex justify-center h-[8%] sticky items-center bg-white text-[red]">
+                  Search results
+                </div>
+                <div className="flex flex-col w-full h-[90%] gap-2 overflow-auto">
+                  <div className="h-[10%] w-[100%] font-bold  flex items-center px-2">
+                    NDAYAMBAJE Patrick
+                  </div>
+                </div>
+              </div>
             )}
           </div>
           <div className="w-[20%] flex justify-evenly " onClick={handleHide}>
