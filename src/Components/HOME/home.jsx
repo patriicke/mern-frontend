@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Logo from "/logo_only.jpg";
 import axios from "../../axios/axios";
 import { useParams, useNavigate } from "react-router-dom";
-
+//We will try to fix the bugs on the home page tomorrow
 export default function Home() {
   const navigate = useNavigate();
   const { id } = useParams();
