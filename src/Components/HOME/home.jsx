@@ -16,14 +16,18 @@ export default function Home() {
   }
   handleClient();
   const [drop, setDrop] = useState(false);
+  const [searchBar, setSearchBar] = useState(false);
   const handleDrop = () => {
     setDrop(true);
   };
   const handleHide = () => {
     setDrop(false);
   };
-  const handleDropSearch(){
-    
+  function handleDropSearch() {
+    setSearchBar(true);
+  }
+  function handleSearchHide() {
+    setSearchBar(false);
   }
   useEffect(() => {}, [drop]);
   return (
@@ -40,7 +44,10 @@ export default function Home() {
         </div>
         <div className="h-[100%] w-[35%] flex items-center gap-2">
           <div className="border rounded-sm flex w-[50%] h-[40%] relative">
-            <div className="flex items-center justify-between w-full h-full px-2 ">
+            <div
+              className="flex items-center justify-between w-full h-full px-2 "
+              onClick={handleDropSearch}
+            >
               <input
                 type="text"
                 placeholder="Search..."
@@ -50,7 +57,11 @@ export default function Home() {
                 <span className="material-symbols-outlined">search</span>
               </button>
             </div>
-            <div className="h-[30em] w-[16.7em] bg-red-300 absolute top-[2.5em] hidden"></div>
+            {searchBar && (
+              <div
+                className="h-[25em] w-[16.7em] bg-slate-200 shadow-xl absolute top-[2.5em]"
+              ></div>
+            )}
           </div>
           <div className="w-[20%] flex justify-evenly " onClick={handleHide}>
             <span className="material-symbols-outlined text-[1.8em]">
@@ -102,11 +113,20 @@ export default function Home() {
       </div>
       <div
         className="bg-white h-[70%] w-[100%]  shadow-lg"
-        onClick={handleHide}
+        onClick={() => {
+          handleHide();
+          handleSearchHide();
+        }}
       >
         <h1 className="">Body</h1>
       </div>
-      <div className="h-[17%] w-[100%] shadow-lg" onClick={handleHide}>
+      <div
+        className="h-[17%] w-[100%] shadow-lg"
+        onClick={() => {
+          handleHide();
+          handleSearchHide();
+        }}
+      >
         Footer
       </div>
     </div>
