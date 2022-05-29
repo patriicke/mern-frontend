@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Logo from "/logo_only.jpg";
 import axios from "../../axios/axios";
 import { useParams, useNavigate } from "react-router-dom";
-//We will try to fix the bugs on the home page tomorrow
 export default function Home() {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -23,6 +22,9 @@ export default function Home() {
   const handleHide = () => {
     setDrop(false);
   };
+  const handleDropSearch(){
+    
+  }
   useEffect(() => {}, [drop]);
   return (
     <div className="bg-white h-[100vh] lg:w-[80%]  flex flex-col gap-2 items-center m-auto sm:w-[100%]">
@@ -37,17 +39,18 @@ export default function Home() {
           <div className="text-[1.2em]">Customer Care</div>
         </div>
         <div className="h-[100%] w-[35%] flex items-center gap-2">
-          <div className="border rounded-sm flex w-[50%] h-[40%] ">
-            <form className="flex items-center justify-between w-full h-full px-2 ">
+          <div className="border rounded-sm flex w-[50%] h-[40%] relative">
+            <div className="flex items-center justify-between w-full h-full px-2 ">
               <input
                 type="text"
                 placeholder="Search..."
                 className="outline-none text-[1.1em] w-[90%] "
               />
-              <button type="submit" className="flex items-center ">
+              <button className="flex items-center ">
                 <span className="material-symbols-outlined">search</span>
               </button>
-            </form>
+            </div>
+            <div className="h-[30em] w-[16.7em] bg-red-300 absolute top-[2.5em] hidden"></div>
           </div>
           <div className="w-[20%] flex justify-evenly " onClick={handleHide}>
             <span className="material-symbols-outlined text-[1.8em]">
