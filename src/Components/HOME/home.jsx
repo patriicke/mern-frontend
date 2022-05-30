@@ -29,14 +29,16 @@ export default function Home() {
   function handleSearchHide() {
     setSearchBar(false);
   }
-  const [searchData, setsearchData] = useState({});
-  function handleChange(event) {
-    setsearchData(() => event.target.value);
-  }
+  const [searchData, setsearchData] = useState("");
+
   const [searchedUser, setSearcheUsers] = useState([]);
   async function handleSearchFromBackend() {
     const users = await axios.post("/search", { searchData });
     setSearcheUsers(users.data);
+  }
+  function handleChange(event) {
+    setsearchData(event.target.value);
+    handleSearchFromBackend();
   }
   useEffect(() => {}, [drop]);
   return (
@@ -68,7 +70,10 @@ export default function Home() {
                 type="text"
                 placeholder="Search..."
                 className="outline-none text-[1.1em] w-[90%] "
-                onChange={handleChange}
+                onChange={(e) => {
+                  setsearchData(e.target.value);
+                  handleSearchFromBackend()
+                }}
               />
               <button className="flex items-center " type="submit">
                 <span
@@ -88,16 +93,14 @@ export default function Home() {
                       : "text-green-500"
                   }`}
                 >
-                  {searchData === {}   ? (
-                    <div>Enter user's name</div>
+                  {searchData === "" ? (
+                    <div className="text-blue-500">Enter user's name</div>
                   ) : searchedUser.length === 0 ? (
                     <div>No matching results found</div>
                   ) : (
-                    <div className="text-green text-[1.2em] ">
+                    <div className="text-green ">
                       Results found{" "}
-                      <span className="text-[red]">
-                        {searchedUser.length}
-                      </span>
+                      <span className="text-[red]">{searchedUser.length}</span>
                     </div>
                   )}
                 </div>
