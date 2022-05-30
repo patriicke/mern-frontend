@@ -29,18 +29,22 @@ export default function Home() {
   function handleSearchHide() {
     setSearchBar(false);
   }
-  const [searchData, setsearchData] = useState("");
+  const [searchData, setSearchData] = useState("");
 
   const [searchedUser, setSearcheUsers] = useState([]);
-  async function handleSearchFromBackend() {
-    const users = await axios.post("/search", { searchData });
+  async function handleSearchFromBackend(search) {
+    const users = await axios.post("/search", {searchData: search});
     setSearcheUsers(users.data);
   }
-  function handleChange(event) {
-    setsearchData(event.target.value);
-    handleSearchFromBackend();
+  const [search, setSearch] = useState()
+  function handleChange(e) {
+    setSearch(e.target.value);
   }
-  useEffect(() => {}, [drop]);
+  useEffect(() => {
+    handleSearchFromBackend(search)
+  },[search])
+  useEffect(() => { }, [drop]);
+
   return (
     <div className="bg-white h-[100vh] lg:w-[80%]  flex flex-col gap-2 items-center m-auto sm:w-[100%]">
       <div className="bg-white-100 h-[10%] w-[100%] flex justify-between shadow-lg gap-2 ">
@@ -70,10 +74,7 @@ export default function Home() {
                 type="text"
                 placeholder="Search..."
                 className="outline-none text-[1.1em] w-[90%] "
-                onChange={(e) => {
-                  setsearchData(e.target.value);
-                  handleSearchFromBackend()
-                }}
+                onChange={handleChange}
               />
               <button className="flex items-center " type="submit">
                 <span
@@ -99,8 +100,7 @@ export default function Home() {
                     <div>No matching results found</div>
                   ) : (
                     <div className="text-green ">
-                      Results found{" "}
-                      <span className="text-[red]">{searchedUser.length}</span>
+                      Loading results...
                     </div>
                   )}
                 </div>
