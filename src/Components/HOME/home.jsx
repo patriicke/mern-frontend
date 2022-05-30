@@ -46,7 +46,10 @@ export default function Home() {
           <div className="border rounded-sm flex w-[50%] h-[40%] relative">
             <div
               className="flex items-center justify-between w-full h-full px-2 "
-              onClick={handleDropSearch}
+              onClick={() => {
+                handleDropSearch()
+                handleHide()
+              }}
             >
               <input
                 type="text"
@@ -59,7 +62,7 @@ export default function Home() {
             </div>
             {searchBar && (
               <div className="h-[25em] w-[16.7em] bg-slate-200 shadow-xl absolute top-[2.5em]">
-                <div className="font-bold flex justify-center h-[8%] sticky items-center bg-white text-[red]">
+                <div className="flex justify-center h-[8%] sticky items-center bg-white text-[red]">
                   Search results
                 </div>
                 <div className="flex flex-col w-full h-[90%] gap-2 overflow-auto">
@@ -84,7 +87,11 @@ export default function Home() {
                 </span>
                 <span
                   className="material-symbols-outlined  text-[2em] hover:cursor-pointer"
-                  onClick={handleDrop}
+                  onClick={() => {
+                    handleDrop();
+                    handleSearchHide()
+                  }}
+
                 >
                   arrow_drop_down
                 </span>
