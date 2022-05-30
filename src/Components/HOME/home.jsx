@@ -30,6 +30,10 @@ export default function Home() {
     setSearchBar(false);
   }
   useEffect(() => {}, [drop]);
+  async function handleSearchUser() {
+    const users = await axios.post("/search");
+    console.log(users.data);
+  }
   return (
     <div className="bg-white h-[100vh] lg:w-[80%]  flex flex-col gap-2 items-center m-auto sm:w-[100%]">
       <div className="bg-white-100 h-[10%] w-[100%] flex justify-between shadow-lg gap-2 ">
@@ -44,22 +48,24 @@ export default function Home() {
         </div>
         <div className="h-[100%] w-[35%] flex items-center gap-2">
           <div className="border rounded-sm flex w-[50%] h-[40%] relative">
-            <div
+            <form
               className="flex items-center justify-between w-full h-full px-2 "
               onClick={() => {
-                handleDropSearch()
-                handleHide()
+                handleDropSearch();
+                handleHide();
               }}
             >
               <input
                 type="text"
+                name="username"
                 placeholder="Search..."
                 className="outline-none text-[1.1em] w-[90%] "
+                onChange={handleSearchUser}
               />
-              <button className="flex items-center ">
+              <button className="flex items-center " onClick={handleSearchUser}>
                 <span className="material-symbols-outlined">search</span>
               </button>
-            </div>
+            </form>
             {searchBar && (
               <div className="h-[25em] w-[16.7em] bg-slate-200 shadow-xl absolute top-[2.5em]">
                 <div className="flex justify-center h-[8%] sticky items-center bg-white text-[red]">
@@ -89,9 +95,8 @@ export default function Home() {
                   className="material-symbols-outlined  text-[2em] hover:cursor-pointer"
                   onClick={() => {
                     handleDrop();
-                    handleSearchHide()
+                    handleSearchHide();
                   }}
-
                 >
                   arrow_drop_down
                 </span>
