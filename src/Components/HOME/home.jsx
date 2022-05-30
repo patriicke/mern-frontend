@@ -32,16 +32,13 @@ export default function Home() {
   const [searchData, setsearchData] = useState({});
   function handleChange(event) {
     setsearchData(() => event.target.value);
-    console.log(searchData);
   }
-  let searchedUser = [1,2,3];
+  const [searchedUser, setSearcheUsers] = useState([]);
   async function handleSearchFromBackend() {
     const users = await axios.post("/search", { searchData });
-    searchedUser = users.data;
-    console.log(searchedUser);
+    setSearcheUsers(users.data);
   }
   useEffect(() => {}, [drop]);
-  useEffect(() => {}, searchedUser);
   return (
     <div className="bg-white h-[100vh] lg:w-[80%]  flex flex-col gap-2 items-center m-auto sm:w-[100%]">
       <div className="bg-white-100 h-[10%] w-[100%] flex justify-between shadow-lg gap-2 ">
@@ -84,17 +81,34 @@ export default function Home() {
             </form>
             {searchBar && (
               <div className="h-[25em] w-[16.7em] bg-slate-200 shadow-xl absolute top-[2.5em]">
-                <div className="flex justify-center h-[8%] sticky items-center bg-white text-[red]">
-                  Search results
+                <div
+                  className={`flex justify-center h-[8%] sticky items-center bg-white ${
+                    searchedUser.length === 0
+                      ? "text-red-500"
+                      : "text-green-500"
+                  }`}
+                >
+                  {searchData === {}   ? (
+                    <div>Enter user's name</div>
+                  ) : searchedUser.length === 0 ? (
+                    <div>No matching results found</div>
+                  ) : (
+                    <div className="text-green text-[1.2em] ">
+                      Results found{" "}
+                      <span className="text-[red]">
+                        {searchedUser.length}
+                      </span>
+                    </div>
+                  )}
                 </div>
                 <div className="flex flex-col w-full h-[90%] gap-2 overflow-auto">
                   {searchedUser.map((data, index) => {
                     return (
                       <div
-                        className="h-[10%] w-[100%] font-bold  flex items-center px-2"
+                        className="h-[10%] w-[100%] font-bold  flex items-center px-2 hover:cursor-pointer"
                         key={index}
                       >
-                        {data}
+                        {`${data.fname} ${data.lname}`}
                       </div>
                     );
                   })}
