@@ -29,11 +29,19 @@ export default function Home() {
   function handleSearchHide() {
     setSearchBar(false);
   }
-  useEffect(() => {}, [drop]);
-  async function handleSearchUser() {
-    const users = await axios.post("/search");
-    console.log(users.data);
+  const [searchData, setsearchData] = useState({});
+  function handleChange(event) {
+    setsearchData(() => event.target.value);
+    console.log(searchData);
   }
+  let searchedUser = [1,2,3];
+  async function handleSearchFromBackend() {
+    const users = await axios.post("/search", { searchData });
+    searchedUser = users.data;
+    console.log(searchedUser);
+  }
+  useEffect(() => {}, [drop]);
+  useEffect(() => {}, searchedUser);
   return (
     <div className="bg-white h-[100vh] lg:w-[80%]  flex flex-col gap-2 items-center m-auto sm:w-[100%]">
       <div className="bg-white-100 h-[10%] w-[100%] flex justify-between shadow-lg gap-2 ">
@@ -54,16 +62,24 @@ export default function Home() {
                 handleDropSearch();
                 handleHide();
               }}
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleSearchFromBackend();
+              }}
             >
               <input
                 type="text"
-                name="username"
                 placeholder="Search..."
                 className="outline-none text-[1.1em] w-[90%] "
-                onChange={handleSearchUser}
+                onChange={handleChange}
               />
-              <button className="flex items-center " onClick={handleSearchUser}>
-                <span className="material-symbols-outlined">search</span>
+              <button className="flex items-center " type="submit">
+                <span
+                  className="material-symbols-outlined"
+                  onClick={handleSearchFromBackend}
+                >
+                  search
+                </span>
               </button>
             </form>
             {searchBar && (
@@ -72,9 +88,16 @@ export default function Home() {
                   Search results
                 </div>
                 <div className="flex flex-col w-full h-[90%] gap-2 overflow-auto">
-                  <div className="h-[10%] w-[100%] font-bold  flex items-center px-2">
-                    NDAYAMBAJE Patrick
-                  </div>
+                  {searchedUser.map((data, index) => {
+                    return (
+                      <div
+                        className="h-[10%] w-[100%] font-bold  flex items-center px-2"
+                        key={index}
+                      >
+                        {data}
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             )}
