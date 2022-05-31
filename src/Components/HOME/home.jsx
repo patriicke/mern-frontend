@@ -29,21 +29,20 @@ export default function Home() {
   function handleSearchHide() {
     setSearchBar(false);
   }
-  const [searchData, setSearchData] = useState("");
+  const [searchedData, setSearcheData] = useState([]);
+  const [search, setSearch] = useState("");
 
-  const [searchedUser, setSearcheUsers] = useState([]);
   async function handleSearchFromBackend(search) {
-    const users = await axios.post("/search", {searchData: search});
-    setSearcheUsers(users.data);
+    const users = await axios.post("/search", { searchData: search });
+    setSearcheData(users.data);
   }
-  const [search, setSearch] = useState()
   function handleChange(e) {
     setSearch(e.target.value);
   }
   useEffect(() => {
-    handleSearchFromBackend(search)
-  },[search])
-  useEffect(() => { }, [drop]);
+    handleSearchFromBackend(search);
+  }, [search]);
+  useEffect(() => {}, [drop]);
 
   return (
     <div className="bg-white h-[100vh] lg:w-[80%]  flex flex-col gap-2 items-center m-auto sm:w-[100%]">
@@ -88,24 +87,18 @@ export default function Home() {
             {searchBar && (
               <div className="h-[25em] w-[16.7em] bg-slate-200 shadow-xl absolute top-[2.5em]">
                 <div
-                  className={`flex justify-center h-[8%] sticky items-center bg-white ${
-                    searchedUser.length === 0
-                      ? "text-red-500"
-                      : "text-green-500"
-                  }`}
+                  className={`flex justify-center h-[8%] sticky items-center bg-white `}
                 >
-                  {searchData === "" ? (
+                  {search === "" ? (
                     <div className="text-blue-500">Enter user's name</div>
-                  ) : searchedUser.length === 0 ? (
-                    <div>No matching results found</div>
+                  ) : searchedData.length == 0 ? (
+                    <div className="text-[red]">No matching results found</div>
                   ) : (
-                    <div className="text-green ">
-                      Loading results...
-                    </div>
+                    <div className="text-green-600">Loading results...</div>
                   )}
                 </div>
                 <div className="flex flex-col w-full h-[90%] gap-2 overflow-auto">
-                  {searchedUser.map((data, index) => {
+                  {searchedData.map((data, index) => {
                     return (
                       <div
                         className="h-[10%] w-[100%] font-bold  flex items-center px-2 hover:cursor-pointer"
