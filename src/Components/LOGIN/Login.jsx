@@ -15,15 +15,15 @@ export default function Login() {
     event.preventDefault();
     try {
       const user = await axios.post("/login", newUser);
-      if (user.data.email === newUser.email) {
-        navigate(`/home/${user.data.id}`);
-      } else if (user.data === "Not Found") {
+      if (user.data === "Not Found") {
         setServerMsg((msg) => "User is not found. Please Signup");
-      } else {
+      } else if ("Incorrect Data") {
         setServerMsg(
           (msg) => "User password or email is not correct. Please Try again!"
         );
       }
+      localStorage.setItem("token", user.data);
+      navigate("/");
     } catch (error) {
       console.log(error.response.data);
     }

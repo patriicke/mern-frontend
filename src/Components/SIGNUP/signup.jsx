@@ -13,22 +13,9 @@ export default function Signup() {
   async function handleSubmit(event) {
     event.preventDefault();
     try {
-      const user = await axios.post("/create", newUser);
-      if (newUser.password === newUser.cpassword) {
-        if (user.data === "created") {
-          navigate("/");
-        } else if (user.data === "exists") {
-          setServerMsg(
-            (msg) => "User email already exists.Try using another email!"
-          );
-        } else {
-          setServerMsg(
-            (msg) => `Username already exists. Try using another username!`
-          );
-        }
-      } else {
-        setServerMsg((msg) => `Passwords don't match`);
-      }
+      const token = await axios.post("/create", newUser);
+      localStorage.setItem("token", token.data)
+      navigate("/home");
     } catch (error) {
       console.log(error.response.data);
     }
@@ -112,7 +99,7 @@ export default function Signup() {
         {serverMsg !== "" ? <ServerMessage /> : null}
         <div className="flex h-[10%] w-[100%] justify-evenly ">
           <Link
-            to="/"
+            to="/login"
             className="bg-blue-400 h-[80%] w-[40%] rounded-md shadow-lg text-[1.2em] font-bold flex items-center justify-center"
           >
             LOGIN

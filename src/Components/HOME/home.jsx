@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
 import Logo from "/logo_only.jpg";
 import axios from "../../axios/axios";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 export default function Home() {
   const navigate = useNavigate();
-  const { id } = useParams();
   let [user, setUser] = useState("");
   async function handleClient() {
-    const user = await axios.get(`/home/${id}`);
+    const user = await axios.post("/home", {
+      token: localStorage.getItem("token")
+    });
+    // console.log(user.data);
     let userName = `${user.data.fname} ${user.data.lname}`;
     if (user.data === "signin") {
-      navigate("/");
+      navigate("/login");
     }
     setUser((name) => userName);
   }
