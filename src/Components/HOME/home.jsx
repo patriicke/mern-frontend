@@ -9,7 +9,6 @@ export default function Home() {
     const user = await axios.post("/home", {
       token: localStorage.getItem("token")
     });
-    // console.log(user.data);
     let userName = `${user.data.fname} ${user.data.lname}`;
     if (user.data === "signin") {
       navigate("/login");
@@ -45,7 +44,6 @@ export default function Home() {
     handleSearchFromBackend(search);
   }, [search]);
   useEffect(() => {}, [drop]);
-
   return (
     <div className="bg-white h-[100vh] lg:w-[80%]  flex flex-col gap-2 items-center m-auto sm:w-[100%]">
       <div className="bg-white-100 h-[10%] w-[100%] flex justify-between shadow-lg gap-2 ">
