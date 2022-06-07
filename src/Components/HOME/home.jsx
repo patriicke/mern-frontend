@@ -122,7 +122,7 @@ export default function Home() {
             <div className="relative" onClick={handleDrop}>
               <div className="flex ">
                 <span className="material-symbols-outlined text-[2.2em] ">
-                  account_circle_full
+                  account_circle
                 </span>
                 <span
                   className="material-symbols-outlined  text-[2em] hover:cursor-pointer"
