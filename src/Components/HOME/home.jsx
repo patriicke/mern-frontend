@@ -12,6 +12,7 @@ export default function Home() {
     let userName = `${user.data.fname} ${user.data.lname}`;
     if (user.data === "signin") {
       navigate("/login");
+      localStorage.removeItem("token");
     }
     setUser((name) => userName);
   }
