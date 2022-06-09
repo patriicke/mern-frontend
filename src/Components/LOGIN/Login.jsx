@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "./../../axios/axios";
 export default function Login() {
@@ -28,9 +28,9 @@ export default function Login() {
     try {
       const user = await axios.post("/login", newUser);
       if (user.data === "Not Found") {
-       return setServerMsg((msg) => "User is not found. Please Signup");
-      } else if ("Incorrect Data") {
-      return  setServerMsg(
+        return setServerMsg((msg) => "User is not found. Please Signup");
+      } else if (user.data === "Incorrect Data") {
+        return setServerMsg(
           (msg) => "User password or email is not correct. Please Try again!"
         );
       }
@@ -47,6 +47,7 @@ export default function Login() {
       </div>
     );
   }
+
   return (
     <div className="bg-white w-[100%] h-[100vh] flex justify-center items-center">
       <form

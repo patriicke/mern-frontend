@@ -12,15 +12,31 @@ export default function Signup() {
   }
   async function handleSubmit(event) {
     event.preventDefault();
-    try {
-      const userInfo = await axios.post("/create", newUser);
-      console.log(userInfo.data);
-      localStorage.setItem("token", userInfo.data.token);
-      navigate("/login");
-    } catch (error) {
-      console.log(error.response.data);
+    if (newUser.password === newUser.cpassword) {
+      try {
+        const userInfo = await axios.post("/create", newUser);
+        if (userInfo.data === "email already exists") {
+          return setServerMsg(
+            "Email Already exists. Please use another email or Login"
+          );
+        }
+        if (userInfo.data === "username already exists") {
+          return setServerMsg(
+            "Usename already exists. Please user another username"
+          );
+        }
+        localStorage.setItem("token", userInfo.data.token);
+        navigate("/login");
+      } catch (error) {
+        console.log(error.response.data);
+      }
+    } else {
+      return setServerMsg(
+        "Passwords don't match. Try using matching passwords"
+      );
     }
   }
+
   function ServerMessage() {
     return (
       <div className="w-[100%] h-[5%] px-3">

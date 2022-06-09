@@ -46,7 +46,10 @@ export default function Home() {
   useEffect(() => {
     handleSearchFromBackend(search);
   }, [search]);
+
   useEffect(() => {}, [drop]);
+  useEffect(() => {}, [localStorage.getItem("token")]);
+
   return (
     <div className="bg-white h-[100vh] lg:w-[80%]  flex flex-col gap-2 items-center m-auto sm:w-[100%]">
       <div className="bg-white-100 h-[10%] w-[100%] flex justify-between shadow-lg gap-2 ">
