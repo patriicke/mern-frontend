@@ -28,9 +28,9 @@ export default function Login() {
     try {
       const user = await axios.post("/login", newUser);
       if (user.data === "Not Found") {
-        setServerMsg((msg) => "User is not found. Please Signup");
+       return setServerMsg((msg) => "User is not found. Please Signup");
       } else if ("Incorrect Data") {
-        setServerMsg(
+      return  setServerMsg(
           (msg) => "User password or email is not correct. Please Try again!"
         );
       }

@@ -156,7 +156,12 @@ export default function Home() {
                     <span className="material-symbols-outlined">pending</span>
                     Pending
                   </div>
-                  <div className="p-2 flex items-center hover:cursor-pointer hover:bg-slate-200 gap-2">
+                  <div
+                    className="p-2 flex items-center hover:cursor-pointer hover:bg-slate-200 gap-2"
+                    onClick={() => {
+                      localStorage.removeItem("token");
+                    }}
+                  >
                     <span className="material-symbols-outlined">logout</span>
                     Log Out
                   </div>
