@@ -1,16 +1,28 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "./../../axios/axios";
 export default function Login() {
   const [newUser, setUser] = useState({});
   const [serverMsg, setServerMsg] = useState("");
   const navigate = useNavigate();
+
   function handleChange(event) {
     const name = event.target.name;
     const value = event.target.value;
     setUser((values) => ({ ...values, [name]: value }));
   }
-
+  if (localStorage.getItem("token") != null) {
+    async function refreshToken() {
+      const token = localStorage.getItem("token");
+      const refresh = await axios.post("/token", { token: token });
+      if (refresh.data == "signin" || refresh.data == "refresh token expired") {
+        return navigate("/login");
+      }
+      localStorage.setItem("token", refresh.data);
+      navigate("/");
+    }
+    refreshToken();
+  }
   async function handleSubmit(event) {
     event.preventDefault();
     try {

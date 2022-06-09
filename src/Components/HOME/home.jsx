@@ -5,15 +5,17 @@ import { useNavigate } from "react-router-dom";
 export default function Home() {
   const navigate = useNavigate();
   let [user, setUser] = useState("");
+
   async function handleClient() {
     const user = await axios.post("/home", {
       token: localStorage.getItem("token")
     });
-    let userName = `${user.data.fname} ${user.data.lname}`;
     if (user.data === "signin") {
       navigate("/login");
-      localStorage.removeItem("token");
+      return localStorage.removeItem("token");
     }
+    let userName = `${user.data.user.fname} ${user.data.user.lname}`;
+    localStorage.setItem("token", user.data.token);
     setUser((name) => userName);
   }
   handleClient();

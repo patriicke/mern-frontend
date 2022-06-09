@@ -13,9 +13,10 @@ export default function Signup() {
   async function handleSubmit(event) {
     event.preventDefault();
     try {
-      const token = await axios.post("/create", newUser);
-      localStorage.setItem("token", token.data)
-      navigate("/home");
+      const userInfo = await axios.post("/create", newUser);
+      console.log(userInfo.data);
+      localStorage.setItem("token", userInfo.data.token);
+      navigate("/login");
     } catch (error) {
       console.log(error.response.data);
     }
