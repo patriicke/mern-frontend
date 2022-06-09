@@ -11,7 +11,7 @@ export default function Login() {
     const value = event.target.value;
     setUser((values) => ({ ...values, [name]: value }));
   }
-  if (localStorage.getItem("token") != null) {
+  if (localStorage.getItem("token") != undefined) {
     async function refreshToken() {
       const token = localStorage.getItem("token");
       const refresh = await axios.post("/token", { token: token });

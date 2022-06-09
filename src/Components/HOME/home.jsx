@@ -163,6 +163,7 @@ export default function Home() {
                     className="p-2 flex items-center hover:cursor-pointer hover:bg-slate-200 gap-2"
                     onClick={() => {
                       localStorage.removeItem("token");
+                      navigate("/login");
                     }}
                   >
                     <span className="material-symbols-outlined">logout</span>
