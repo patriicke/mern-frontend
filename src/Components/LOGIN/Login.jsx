@@ -24,6 +24,10 @@ export default function Login() {
     refreshToken();
   }
   async function handleSubmit(event) {
+    if (newUser.email == null || newUser.password == null) {
+      setLoading(false);
+      return setServerMsg("Please fill the form!");
+    }
     event.preventDefault();
     try {
       const user = await axios.post("/login", newUser);
@@ -117,8 +121,8 @@ export default function Login() {
             type="submit"
             className="bg-green-500 h-[100%] w-[40%] rounded-md shadow-lg text-[1.4em] font-bold"
             onClick={() => {
-              newUser.email == "" ||
-                (newUser.password == "" && setLoading(true));
+              setLoading(true);
+              handleSubmit();
             }}
           >
             LOGIN
