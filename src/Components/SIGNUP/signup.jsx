@@ -39,7 +39,6 @@ export default function Signup() {
             "Usename already exists. Please user another username"
           );
         }
-        setLoading(false);
         localStorage.setItem("token", userInfo.data.token);
         navigate("/login");
       } catch (error) {
