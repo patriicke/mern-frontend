@@ -6,3 +6,11 @@
 * {
   font-family: "Acme", sans-serif;
 }
+.mostly-customized-scrollbar::-webkit-scrollbar {
+  width: 5px;
+  height: 8px;
+  background-color: #aaa; /* or add it to the track */
+}
+.mostly-customized-scrollbar::-webkit-scrollbar-thumb {
+  background: #000;
+}

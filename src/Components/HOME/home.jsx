@@ -11,6 +11,7 @@ export default function Home() {
     const user = await axios.post("/home", {
       token: localStorage.getItem("token")
     });
+    console.log(user.data)
     if (user.data === "signin") {
       navigate("/login");
       return localStorage.removeItem("token");
@@ -205,8 +206,8 @@ export default function Home() {
         }}
       >
         <div className="w-[75%]"></div>
-        <div className="w-[25%]">
-          <Chat />
+        <div className="lg:w-[30%] md:w-[30%] shadow-lg">
+            <Chat />
         </div>
       </div>
       <div
