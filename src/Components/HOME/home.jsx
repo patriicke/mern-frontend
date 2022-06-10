@@ -180,7 +180,8 @@ export default function Home() {
                   </div>
                   <div
                     className="p-2 flex items-center hover:cursor-pointer hover:bg-slate-200 gap-2"
-                    onClick={() => {
+                      onClick={() => {
+                      setLoading(true)
                       localStorage.removeItem("token");
                       navigate("/login");
                     }}
