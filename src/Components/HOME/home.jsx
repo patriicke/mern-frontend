@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Logo from "/logo_only.jpg";
 import axios from "../../axios/axios";
 import { useNavigate } from "react-router-dom";
+import Chat from "../Chat/Chat";
 export default function Home() {
   const navigate = useNavigate();
   let [user, setUser] = useState("");
@@ -141,6 +142,7 @@ export default function Home() {
             <span className="material-symbols-outlined text-[1.8em]">
               notifications
             </span>
+
             <span className="material-symbols-outlined text-[1.8em]">chat</span>
           </div>
           <div className="w-[10%] flex flex-col px-2">
@@ -196,13 +198,16 @@ export default function Home() {
         </div>
       </div>
       <div
-        className="bg-white h-[70%] w-[100%]  shadow-lg"
+        className="bg-white h-[70%] w-[100%]  shadow-lg flex flex-row"
         onClick={() => {
           handleHide();
           handleSearchHide();
         }}
       >
-        <h1 className="">Body</h1>
+        <div className="w-[75%]"></div>
+        <div className="w-[25%]">
+          <Chat />
+        </div>
       </div>
       <div
         className="h-[17%] w-[100%] shadow-lg"
