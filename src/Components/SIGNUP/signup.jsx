@@ -12,34 +12,37 @@ export default function Signup() {
     setUser((values) => ({ ...values, [name]: value }));
   }
   async function handleSubmit(event) {
+    event.preventDefault();
     if (
-      (await newUser.fname) == undefined ||
-      (await newUser.lname) == undefined ||
-      (await newUser.email) == undefined ||
-      (await newUser.username) == undefined ||
-      (await newUser.password) == undefined ||
-      (await newUser.cpassword) == undefined
+      (await newUser.fname) == "" ||
+      (await newUser.lname) == "" ||
+      (await newUser.email) == "" ||
+      (await newUser.username) == "" ||
+      (await newUser.password) == "" ||
+      (await newUser.cpassword) == ""
     ) {
       setLoading(false);
       return setServerMsg("Please fill the form provided");
     }
-    event.preventDefault();
     if (newUser.password === newUser.cpassword) {
       try {
-        const userInfo = await axios.post("/create", newUser);
-        if (userInfo.data === "email already exists") {
+        const response = await axios.post("/signup", newUser, {
+          withCredentials: true
+        });
+        if (response.data === "email already exists") {
           setLoading(false);
           return setServerMsg(
             "Email Already exists. Please use another email or Login"
           );
         }
-        if (userInfo.data === "username already exists") {
+        if (response.data === "username already exists") {
           setLoading(false);
           return setServerMsg(
             "Usename already exists. Please user another username"
           );
         }
-        localStorage.setItem("token", userInfo.data.token);
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("user_id", response.data.id);
         navigate("/login");
       } catch (error) {
         console.log(error.response.data);
@@ -165,7 +168,7 @@ export default function Signup() {
             className="bg-green-500 h-[80%] w-[40%] rounded-md shadow-lg text-[1.4em] font-bold"
             onClick={() => {
               setLoading(true);
-              handleSubmit();
+              handleSubmit(event);
             }}
           >
             SIGNUP

@@ -9,17 +9,17 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   async function handleClient() {
     const user = await axios.post("/home", {
-      token: localStorage.getItem("token")
+      token: localStorage.getItem("token"),
+      id: localStorage.getItem("user_id")
     });
-    console.log(user.data)
     if (user.data === "signin") {
       navigate("/login");
-      return localStorage.removeItem("token");
     }
     let userName = `${user.data.user.fname} ${user.data.user.lname}`;
     localStorage.setItem("token", user.data.token);
+    localStorage.setItem("user_id", user.data.id);
     setLoading(false);
-    setUser((name) => userName);
+    return setUser(userName);
   }
   handleClient();
   const [drop, setDrop] = useState(false);
@@ -207,7 +207,7 @@ export default function Home() {
       >
         <div className="w-[75%]"></div>
         <div className="lg:w-[30%] md:w-[30%] shadow-lg">
-            <Chat />
+          <Chat />
         </div>
       </div>
       <div

@@ -11,18 +11,28 @@ export default function Login() {
     const value = event.target.value;
     setUser((values) => ({ ...values, [name]: value }));
   }
-  if (localStorage.getItem("token") != undefined) {
-    async function refreshToken() {
-      const token = localStorage.getItem("token");
-      const refresh = await axios.post("/token", { token: token });
-      if (refresh.data == "signin" || refresh.data == "refresh token expired") {
-        return navigate("/login");
+  useEffect(() => {
+    if (localStorage.getItem("token") != undefined) {
+      async function refreshToken() {
+        const token = localStorage.getItem("token");
+        const login = await axios.post(
+          "/login",
+          { token: token },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`
+            },
+            withCredentials: true
+          }
+        );
+        localStorage.setItem("token", login.data.token);
+        localStorage.setItem("user_id", login.data.id);
+        console.log(login.data);
+        navigate("/");
       }
-      localStorage.setItem("token", refresh.data);
-      navigate("/");
+      refreshToken();
     }
-    refreshToken();
-  }
+  }, []);
   async function handleSubmit(event) {
     if (newUser.email == null || newUser.password == null) {
       setLoading(false);
@@ -30,7 +40,10 @@ export default function Login() {
     }
     event.preventDefault();
     try {
-      const user = await axios.post("/login", newUser);
+      const user = await axios.post("/login", newUser, {
+        withCredentials: true
+      });
+      console.log(user.data);
       if (user.data === "Not Found") {
         setLoading(false);
         return setServerMsg((msg) => "User is not found. Please Signup");
@@ -40,7 +53,8 @@ export default function Login() {
           (msg) => "User password or email is not correct. Please Try again!"
         );
       }
-      localStorage.setItem("token", user.data);
+      localStorage.setItem("token", user.data.token);
+      localStorage.setItem("user_id", user.data.id);
       navigate("/");
     } catch (error) {
       console.log(error.response.data);
@@ -120,9 +134,9 @@ export default function Login() {
           <button
             type="submit"
             className="bg-green-500 h-[100%] w-[40%] rounded-md shadow-lg text-[1.4em] font-bold"
-            onClick={() => {
+            onClick={(event) => {
               setLoading(true);
-              handleSubmit();
+              handleSubmit(event);
             }}
           >
             LOGIN
