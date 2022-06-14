@@ -15,6 +15,7 @@ export default function Home() {
           Authorization: `Bearer ${localStorage.getItem("token")}`
         }
       });
+      console.log(user.data)
       if (user.data === "signin") {
         return navigate("/login");
       }
