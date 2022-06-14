@@ -7,21 +7,24 @@ export default function Home() {
   const navigate = useNavigate();
   let [user, setUser] = useState("");
   const [loading, setLoading] = useState(true);
-  async function handleClient() {
-    const user = await axios.post("/home", {
-      token: localStorage.getItem("token"),
-      id: localStorage.getItem("user_id")
-    });
-    if (user.data === "signin") {
-      navigate("/login");
+  useEffect(() => {
+    async function handleClient() {
+      const user = await axios.get("/home", {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+      });
+      if (user.data === "signin") {
+        return navigate("/login");
+      }
+      let userName = `${user.data.userData.fname} ${user.data.userData.lname}`;
+      localStorage.setItem("token", user.data.token);
+      setLoading(false);
+      return setUser(userName);
     }
-    let userName = `${user.data.user.fname} ${user.data.user.lname}`;
-    localStorage.setItem("token", user.data.token);
-    localStorage.setItem("user_id", user.data.id);
-    setLoading(false);
-    return setUser(userName);
-  }
-  handleClient();
+    handleClient();
+  });
   const [drop, setDrop] = useState(false);
   const [searchBar, setSearchBar] = useState(false);
   const handleDrop = () => {
@@ -39,7 +42,14 @@ export default function Home() {
   const [searchedData, setSearcheData] = useState([]);
   const [search, setSearch] = useState("");
   async function handleSearchFromBackend(search) {
-    const users = await axios.post("/search", { searchData: search });
+    const users = await axios.post(
+      "/search",
+      { searchData: search },
+      {
+        withCredentials: true,
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+      }
+    );
     setSearcheData(users.data);
   }
   function handleChange(e) {
@@ -48,10 +58,15 @@ export default function Home() {
   useEffect(() => {
     handleSearchFromBackend(search);
   }, [search]);
-
+  const handleSignOut = () => {
+    const signout = axios.get("/logout", {
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`
+      }
+    });
+  };
   useEffect(() => {}, [drop]);
-  useEffect(() => {}, [localStorage.getItem("token")]);
-
   return loading ? (
     <div className="flex justify-center items-center h-[100vh]">
       <svg
@@ -185,6 +200,7 @@ export default function Home() {
                     className="p-2 flex items-center hover:cursor-pointer hover:bg-slate-200 gap-2"
                     onClick={() => {
                       setLoading(true);
+                      handleSignOut();
                       localStorage.removeItem("token");
                       navigate("/login");
                     }}

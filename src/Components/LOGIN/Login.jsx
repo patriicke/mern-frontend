@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "./../../axios/axios";
+import axios from "../../axios/axios";
 export default function Login() {
   const [newUser, setUser] = useState({});
   const [serverMsg, setServerMsg] = useState("");
@@ -11,28 +11,6 @@ export default function Login() {
     const value = event.target.value;
     setUser((values) => ({ ...values, [name]: value }));
   }
-  useEffect(() => {
-    if (localStorage.getItem("token") != undefined) {
-      async function refreshToken() {
-        const token = localStorage.getItem("token");
-        const login = await axios.post(
-          "/login",
-          { token: token },
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`
-            },
-            withCredentials: true
-          }
-        );
-        localStorage.setItem("token", login.data.token);
-        localStorage.setItem("user_id", login.data.id);
-        console.log(login.data);
-        navigate("/");
-      }
-      refreshToken();
-    }
-  }, []);
   async function handleSubmit(event) {
     if (newUser.email == null || newUser.password == null) {
       setLoading(false);
@@ -43,7 +21,6 @@ export default function Login() {
       const user = await axios.post("/login", newUser, {
         withCredentials: true
       });
-      console.log(user.data);
       if (user.data === "Not Found") {
         setLoading(false);
         return setServerMsg((msg) => "User is not found. Please Signup");
@@ -54,7 +31,6 @@ export default function Login() {
         );
       }
       localStorage.setItem("token", user.data.token);
-      localStorage.setItem("user_id", user.data.id);
       navigate("/");
     } catch (error) {
       console.log(error.response.data);

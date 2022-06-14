@@ -42,8 +42,7 @@ export default function Signup() {
           );
         }
         localStorage.setItem("token", response.data.token);
-        localStorage.setItem("user_id", response.data.id);
-        navigate("/login");
+        navigate("/");
       } catch (error) {
         console.log(error.response.data);
       }
