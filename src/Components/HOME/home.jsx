@@ -15,7 +15,7 @@ export default function Home() {
           Authorization: `Bearer ${localStorage.getItem("token")}`
         }
       });
-      console.log(user.data)
+      console.log(user.data);
       if (user.data === "signin") {
         return navigate("/login");
       }
@@ -66,6 +66,7 @@ export default function Home() {
         Authorization: `Bearer ${localStorage.getItem("token")}`
       }
     });
+    localStorage.removeItem("token");
   };
   useEffect(() => {}, [drop]);
   return loading ? (
@@ -201,8 +202,8 @@ export default function Home() {
                     className="p-2 flex items-center hover:cursor-pointer hover:bg-slate-200 gap-2"
                     onClick={() => {
                       setLoading(true);
-                      handleSignOut();
                       localStorage.removeItem("token");
+                      handleSignOut();
                       navigate("/login");
                     }}
                   >
