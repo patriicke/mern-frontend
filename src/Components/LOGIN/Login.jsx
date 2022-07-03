@@ -30,7 +30,7 @@ export default function Login() {
           (msg) => "User password or email is not correct. Please Try again!"
         );
       }
-      localStorage.setItem("token", user.data.token);
+      localStorage.setItem("token", user.data.tokenk);
       navigate("/");
     } catch (error) {
       console.log(error.response.data);
